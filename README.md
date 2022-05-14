@@ -1,4 +1,4 @@
-Ansible Role: Zeus
+Ansible Role: GPG
 =========
 Installs and Configure Zeus Workstations.
 
@@ -14,9 +14,14 @@ Role Variables
 gpg_user: "root"
 gpg_group: "{{ gpg_user }}"
 gpg_key_id: null
-gpg_private_key: null
-gpg_import_file: "{{ gpg_key_id }}"
-gpg_temp_dir: "tmp/gpg"
+gpg_key_file: "{{ gpg_key_id }}.key"
+gpg_backup_dir: "files/gpg"
+gpg_backup_file: "{{ gpg_backup_dir }}/{{ gpg_key_file }}"
+
+github_username: ""
+github_token: ""
+github_key_id: ""
+github_rest_url: "https://api.github.com/user/gpg_keys"
 ```
 
 Dependencies
@@ -29,7 +34,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: workstation
       roles:
-         - role: kilip.zeus
+         - role: kilip.gpg
 
 License
 -------
