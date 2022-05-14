@@ -1,0 +1,14 @@
+---
+- name: gpg ~> update apt cache.
+  apt: update_cache=yes cache_valid_time=600
+  when: ansible_os_family == "Debian"
+
+- name: gpg ~> set required packages for Debian
+  set_fact:
+    gpg_packages: gpg-agent
+  when: ansible_os_family == "Debian"
+
+- name: gpg ~> set required packages for RedHat
+  set_fact:
+    gpg_packages: gnupg
+  when: ansible_os_family == "RedHat"

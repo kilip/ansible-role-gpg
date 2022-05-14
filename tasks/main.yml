@@ -1,4 +1,6 @@
 ---
+- include_tasks: preflight.yml
+
 - name: gpg ~> setting github token from env variables
   set_fact:
     github_token: "{{ lookup('env', 'GITHUB_TOKEN') }}"
@@ -8,6 +10,7 @@
   package:
     name: gpg-agent
     state: present
+  when: ansible_os_family == "Debian"
 
 - name: gpg ~> check existing key
   local_action:

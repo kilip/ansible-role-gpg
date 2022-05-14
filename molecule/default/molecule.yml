@@ -7,10 +7,9 @@ driver:
 
 platforms:
   - name: ansible-role-gpg
-    image: geerlingguy/docker-ubuntu2004-ansible:latest
+    image: kilip/molecule-${MOLECULE_DISTRO:-ubuntu-22.04}:latest
     pre_build_image: true
     privileged: true
-    command: ""
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
 
