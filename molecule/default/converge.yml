@@ -1,0 +1,25 @@
+---
+- name: Converge
+  hosts: all
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=yes cache_valid_time=600
+    - name: group ~> ensure group {{ gpg_group }} exists
+      group:
+        name: "{{ gpg_group }}"
+        state: present
+    - name: user ~> ensure user {{ gpg_user }} exists
+      user:
+        name: "{{ gpg_user }}"
+        state: present
+        group: "{{ gpg_group }}"
+        create_home: true
+  tasks:
+    - name: "Include kilip.gpg"
+      include_role:
+        name: "kilip.gpg"
+  vars:
+    gpg_user: toni
+    gpg_group: toni
+    gpg_key_id: 1F41A0675D4C610F
+    gpg_key_file: test1.key

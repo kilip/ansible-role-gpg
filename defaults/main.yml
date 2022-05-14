@@ -1,0 +1,12 @@
+---
+gpg_user: "root"
+gpg_group: "{{ gpg_user }}"
+gpg_key_id: null
+gpg_key_file: "{{ gpg_key_id }}.key"
+gpg_backup_dir: "files/gpg"
+gpg_backup_file: "{{ gpg_backup_dir }}/{{ gpg_key_file }}"
+
+github_username: ""
+github_token: ""
+github_key_id: ""
+github_rest_url: "https://api.github.com/user/gpg_keys"

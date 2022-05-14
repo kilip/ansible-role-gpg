@@ -1,0 +1,24 @@
+---
+- name: gpg ~> check if key is imported
+  become: true
+  become_user: "{{ gpg_user }}"
+  command: "gpg --list-secret-keys {{ gpg_key_id }}"
+  register: rs_gpg_check
+  failed_when: no
+  changed_when: false
+
+- name: gpg ~> copy backup file into "{{ ansible_host }}"
+  copy:
+    src: "{{ gpg_backup_file }}"
+    dest: "/tmp/gpg.key"
+    owner: "{{ gpg_user }}"
+    group: "{{ gpg_user }}"
+    mode: "0600"
+  when: rs_gpg_check.rc != 0
+
+- name: gpg ~> import existing key from backup
+  become: true
+  become_user: "{{ gpg_user }}"
+  command: "gpg --import /tmp/gpg.key"
+  register: rs_gpg_import
+  when: rs_gpg_check.rc != 0

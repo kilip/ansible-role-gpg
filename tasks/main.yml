@@ -1,0 +1,36 @@
+---
+- name: gpg ~> setting github token from env variables
+  set_fact:
+    github_token: "{{ lookup('env', 'GITHUB_TOKEN') }}"
+  when: lookup('env', 'GITHUB_TOKEN') and github_token == ""
+
+- name: gpg ~> ensure gpg-agent installed
+  package:
+    name: gpg-agent
+    state: present
+
+- name: gpg ~> check existing key
+  local_action:
+    module: stat
+    path: "{{ gpg_backup_file }}"
+  register: rs_gpg_key
+
+- name: gpg ~> restore gpg key
+  include_tasks: restore.yml
+  when: rs_gpg_key.stat.exists
+
+- name: gpg ~> get armored public key
+  become: true
+  become_user: "{{ gpg_user }}"
+  command: "gpg --armor --export {{ gpg_key_id }}"
+  register: rs_gpg_armor
+  changed_when: false
+
+- name: gpg ~> set current armored public key
+  set_fact:
+    gpg_public_key: "{{ rs_gpg_armor.stdout }}"
+    gpg_armor_success: "{{ 0 == rs_gpg_armor.rc }}"
+
+- name: gpg ~> include github upload task
+  include_tasks: github.yml
+  when: github_token != "" and gpg_armor_success
