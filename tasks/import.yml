@@ -1,5 +1,6 @@
 ---
-- block:
+- name: gpg ~> start importing gpg key
+  block:
   - name: gpg ~> copy key file to target host
     copy:
       src: "{{ gpg_key_file }}"
