@@ -23,9 +23,3 @@
     path: "{{ gpg_temp_dir }}"
     state: directory
     mode: "0777"
-
-- name: gpg ~> ensure pip packaging installed
-  pip:
-    name: packaging
-    state: present
-  when: ansible_os_family == "RedHat"
