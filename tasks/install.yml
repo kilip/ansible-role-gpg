@@ -1,0 +1,23 @@
+---
+- block:
+  - name: gpg ~> ensure temp bin dir exists
+    file:
+      path: "{{ gpg_temp_bin }}"
+      state: directory
+  - name: gpg ~> setup gpg-generate.sh
+    template:
+      src: gpg-generate.sh.j2
+      dest: "{{ gpg_temp_bin }}/gpg-generate.sh"
+      mode: "0700"
+  - name: gpg ~> setup key-script.txt
+    template:
+      src: key-script.txt.j2
+      dest: "{{ gpg_temp_bin }}/key-script.txt"
+  - name: 'gpg ~> install key: "{{ gpg_comment }}"'
+    shell:
+      cmd: "GPG_TTY=$(tty) gpg --verbose --batch --generate-key {{ gpg_temp_bin }}/key-script.txt"
+    failed_when: false
+    register: dbg
+  - debug: var=dbg
+  become: true
+  become_user: "{{ gpg_user }}"

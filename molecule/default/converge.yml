@@ -20,4 +20,9 @@
     gpg_user: toni
     gpg_group: toni
     gpg_key_id: 1F41A0675D4C610F
-    gpg_key_file: test1.key
+    gpg_key_file: files/gpg/test1.key
+
+    gpg_realname: Test Generate Key
+    gpg_comment: Test Key
+    gpg_email: foo@bar.com
+

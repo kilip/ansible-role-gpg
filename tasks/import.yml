@@ -1,0 +1,29 @@
+---
+- block:
+  - name: gpg ~> copy key file to target host
+    copy:
+      src: "{{ gpg_key_file }}"
+      dest: "{{ gpg_temp_dir }}/private.key"
+      mode: "0600"
+    changed_when: false
+
+  - name: gpg ~> import key from file
+    gpg_key:
+      file: "{{ gpg_temp_dir }}/private.key"
+      state: present
+      trust: 5
+
+  - name: gpg ~> get keyinfo for all keys
+    gpg_key:
+      fpr: "*"
+      state: info
+    register: gpg_info
+
+  - name: gpg ~> remove key file
+    file:
+      path: "{{ gpg_temp_dir }}/private.key"
+      state: absent
+    changed_when: false
+
+  become: true
+  become_user: "{{ gpg_user }}"

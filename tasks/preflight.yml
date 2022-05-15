@@ -12,3 +12,14 @@
   set_fact:
     gpg_packages: gnupg
   when: ansible_os_family == "RedHat"
+
+- name: gpg ~> ensure gpg agent installed
+  package:
+    name: "{{ gpg_packages }}"
+    state: present
+
+- name: gpg ~> ensure temp dir exists
+  file:
+    path: "{{ gpg_temp_dir }}"
+    state: directory
+    mode: "0777"

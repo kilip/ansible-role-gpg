@@ -1,0 +1,11 @@
+- name: gpg ~> check existing gpg key
+  become: true
+  become_user: "{{ gpg_user }}"
+  gpg_key:
+    fpr: "*"
+    state: info
+  register: stat_gpg_info
+
+- name: gpg ~> gather facts
+  set_fact:
+    gpg_info: "{{ stat_gpg_info['keys'] }}"

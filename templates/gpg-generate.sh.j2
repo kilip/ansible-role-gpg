@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -m
+
+cd /home/{{ gpg_user }}/.gnupg
+gpg --verbose --batch --gen-key keydetails.txt
