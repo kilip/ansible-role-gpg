@@ -1,5 +1,9 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    gpg_user: "root"
+    gpg_user_home: "/root"
+    gpg_backup_key: "backup.gpg"
   roles:
     - role: "kilip.gpg"

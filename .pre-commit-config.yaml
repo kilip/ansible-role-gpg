@@ -1,6 +1,13 @@
 ---
 fail_fast: false
 repos:
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.32.0
+    hooks:
+      - args:
+          - --config-file
+          - .yamllint
+        id: yamllint
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
@@ -21,10 +28,3 @@ repos:
     rev: v8.18.0
     hooks:
       - id: gitleaks
-  - repo: https://github.com/adrienverge/yamllint
-    rev: v1.32.0
-    hooks:
-      - args:
-          - --config-file
-          - .yamllint
-        id: yamllint
