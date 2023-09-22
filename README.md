@@ -11,8 +11,7 @@ Requirements
 
 Export your existing key with this command:
 ```sh
-A4AD7D3E2E2BBB68EF345D1A1635B4421C0E8E09
-$ gpg -o output.gpg --export-options backup --export-secret-keys your.gpg@email.com
+$ gpg -o backup.gpg --export-options backup --export-secret-keys your.gpg@email.com
 
 ```
 
