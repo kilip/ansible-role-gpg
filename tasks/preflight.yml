@@ -1,0 +1,37 @@
+---
+- name: Ensure apt cache updated
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 600
+  when: ansible_os_family == "Debian"
+
+- name: Ensure debian package configured
+  ansible.builtin.set_fact:
+    gpg_packages: gpg-agent
+  when: ansible_os_family == "Debian"
+
+- name: Ensure redhat package configured
+  ansible.builtin.set_fact:
+    gpg_packages: gnupg
+  when: ansible_os_family == "RedHat"
+
+- name: Ensure gpg-agent installed
+  ansible.builtin.package:
+    name: "{{ gpg_packages }}"
+    state: present
+
+- name: Ensure user gnupg dir exists
+  ansible.builtin.file:
+    path: "/root/.gnupg"
+    state: directory
+    owner: "root"
+    group: "root"
+    mode: "0700"
+
+- name: Ensure gpg temp dir exists
+  ansible.builtin.file:
+    path: "{{ gpg_temp_dir }}"
+    state: directory
+    mode: "0700"
+    owner: "{{ gpg_user }}"
+    group: "{{ gpg_user_group }}"

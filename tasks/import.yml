@@ -1,0 +1,23 @@
+---
+- name: Ensure gpg key imported
+  become: true
+  become_user: "{{ gpg_user }}"
+  block:
+    - name: Ensure backup key copied
+      ansible.builtin.copy:
+        src: "{{ gpg_backup_key }}"
+        dest: "{{ gpg_temp_backup }}"
+        mode: "0600"
+      changed_when: false
+
+    - name: Ensure gpg key imported
+      gpg_key:
+        file: "{{ gpg_temp_backup }}"
+        state: present
+        trust: 5
+
+    - name: Ensure gpg backup file removed
+      ansible.builtin.file:
+        path: "{{ gpg_temp_backup }}"
+        state: absent
+      changed_when: false

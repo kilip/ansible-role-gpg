@@ -1,2 +1,8 @@
 ---
-# tasks file for gpg
+- name: Ensure preflight task executed
+  ansible.builtin.include_tasks:
+    file: preflight.yml
+
+- name: Ensure gpg keys imported
+  ansible.builtin.include_tasks:
+    file: import.yml

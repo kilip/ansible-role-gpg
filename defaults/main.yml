@@ -1,2 +1,9 @@
 ---
-# defaults file for gpg
+# defaults config for gpg role
+gpg_user: ""
+gpg_user_group: "{{ gpg_user }}"
+gpg_home: "/home/{{ gpg_user }}/.gnupg"
+gpg_backup_key: ""
+gpg_temp_dir: "/tmp/kilip.gpg"
+gpg_temp_bin: "{{ gpg_temp_dir }}/bin"
+gpg_temp_backup: "{{ gpg_temp_dir }}/backup.gpg"

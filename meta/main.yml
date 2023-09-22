@@ -8,16 +8,22 @@ galaxy_info:
 
   license: MIT
 
-  min_ansible_version: 2.10
+  min_ansible_version: "2.10"
   github_branch: main
   platforms:
-    - name: Ubuntu
-      versions:
-        - jammy
     - name: Debian
       versions:
         - bookworm
+        - bullseye
+    - name: Ubuntu
+      versions:
+        - jammy
+        - lunar
 
-  galaxy_tags: []
+  galaxy_tags:
+    - gpg
+    - workstation
+    - desktop
+    - util
 
 dependencies: []
